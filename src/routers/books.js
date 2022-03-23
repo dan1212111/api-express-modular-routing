@@ -62,3 +62,26 @@ router.put("/:id", (req, res) => {
 })
 
 module.exports = router
+
+router.patch("/:id", (req, res) => {
+    const bookId = parseInt(req.params.id)
+  
+    const existingbook = data.books.find((book) => book.id === bookId)
+    if (!existingbook) {
+      res.status(404)
+      res.json({ error: "book does not exist" })
+      return
+    }
+  
+    if (!req.body.title) {
+      res.status(400)
+      res.json({ error: "title not specified" })
+      return
+    }
+  
+    existingbook.title = req.body.title
+  
+    res.json({ book: existingbook })
+  })
+  
+  module.exports = router

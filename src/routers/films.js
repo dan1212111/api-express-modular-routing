@@ -61,4 +61,26 @@ router.put("/:id", (req, res) => {
   res.json({ film: existingfilm })
 })
 
+router.patch("/:id", (req, res) => {
+  const filmId = parseInt(req.params.id)
+
+  const existingfilm = data.films.find((film) => film.id === filmId)
+  if (!existingfilm) {
+    res.status(404)
+    res.json({ error: "film does not exist" })
+    return
+  }
+
+  if (!req.body.title) {
+    res.status(400)
+    res.json({ error: "title not specified" })
+    return
+  }
+
+  existingfilm.title = req.body.title
+
+  res.json({ film: existingfilm })
+})
+
+
 module.exports = router
